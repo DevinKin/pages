@@ -1,95 +1,90 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机数字生成器</title>
-    <style>
-        /* 全局样式 */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <title>皇上驾到~跪~</title>
+  <style>
+    body {
+      font-family: "微软雅黑", sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #fff8e1;
+    }
 
-        /* 容器样式 */
-        .container {
-            text-align: center;
-        }
+    h1 {
+      font-size: 34px;
+      color: #6a1b9a;
+    }
 
-        /* 数字显示区域 */
-        #number {
-            font-size: 10rem;
-            font-weight: bold;
-            color: #fff;
-            margin: 20px 0;
-            transition: opacity 0.5s ease;
-        }
+    button {
+      padding: 15px 35px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 20px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.15s ease;
+    }
 
-        /* 按钮样式 */
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            color: #000;
-            background-color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+    button:hover {
+      transform: scale(1.05);
+    }
 
-        button:hover {
-            background-color: #ddd;
-            transform: scale(1.05);
-        }
+    .red-btn {
+      background-color: #e53935;
+      color: white;
+    }
 
-        button:active {
-            transform: scale(0.95);
-        }
-
-        /* 动态滚动效果 */
-        @keyframes roll {
-            0% { opacity: 0; transform: translateY(-50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .rolling {
-            animation: roll 0.5s ease-out;
-        }
-    </style>
+    .blue-btn {
+      background-color: #1e88e5;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 数字显示区域 -->
-        <div id="number">0</div>
-        <!-- 生成按钮 -->
-        <button onclick="generateNumber()">生成随机数字</button>
-    </div>
 
-    <script>
-        // 生成随机数字的函数
-        function generateNumber() {
-            const numberElement = document.getElementById('number');
+  <h1 id="title">皇上驾到～跪～</h1>
 
-            // 添加滚动动画
-            numberElement.classList.add('rolling');
+  <div id="button-container">
+    <button class="red-btn" onclick="kneel()">跪下</button>
+    <button class="blue-btn" onclick="refuse()">不跪下</button>
+  </div>
 
-            // 生成 0 到 999 的随机数字
-            const randomNumber = Math.floor(Math.random() * 1000);
+  <script>
+    let stage = 0;
 
-            // 延迟更新数字，确保动画完成
-            setTimeout(() => {
-                numberElement.textContent = randomNumber;
-                numberElement.classList.remove('rolling');
-            }, 500); // 动画持续时间为 0.5s
-        }
-    </script>
+    function kneel() {
+      document.getElementById("title").innerText = "爱卿，深得朕心～";
+      document.getElementById("button-container").innerHTML = ""; // 清空按钮
+    }
+
+    function refuse() {
+      const title = document.getElementById("title");
+      const container = document.getElementById("button-container");
+
+      stage++;
+
+      if (stage === 1) {
+        title.innerText = "你是皇帝？我是皇帝？";
+        container.innerHTML = `
+          <button class="red-btn" onclick="kneel()">跪下</button>
+          <button class="blue-btn" onclick="refuse()">点错了？</button>
+        `;
+      } else if (stage === 2) {
+        title.innerText = "你还真不跪是吧？";
+        container.innerHTML = `
+          <button class="red-btn" onclick="kneel()">赶紧跪下</button>
+          <button class="blue-btn" onclick="refuse()">坚持不跪</button>
+        `;
+      } else {
+        title.innerText = "来人啊，把这大胆刁民拖出去！不过……朕念你年幼无知……";
+        container.innerHTML = `
+          <button class="red-btn" onclick="kneel()">臣知错，跪！</button>
+        `;
+      }
+    }
+  </script>
+
 </body>
 </html>
